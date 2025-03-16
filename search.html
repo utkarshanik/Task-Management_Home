@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight Search Example</title>
+    <style>
+        .highlight {
+            background-color: rgb(12, 12, 9);
+            color: #fff;
+        }
+    </style>
+</head>
+<body id="dataSource">
+    <div >
+        <p class="data-item">Apple</p>
+        <p class="data-item">Banana</p>
+        <p class="data-item">Carrot</p>
+    </div>
+    
+    <input type="text" id="searchBox" placeholder="Search...">
+    <button onclick="performSearch()">Search</button>
+
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>
+    <script >
+  function performSearch() {
+    let searchValue = document.getElementById('searchBox').value.toLowerCase();
+    let dataItems = document.querySelectorAll('#dataSource .data-item');
+
+    // Clear previous highlights
+    dataItems.forEach(item => {
+        item.innerHTML = item.textContent;
+    });
+
+    // Highlight matching text
+    dataItems.forEach(item => {
+        let text = item.textContent.toLowerCase();
+        if (text.includes(searchValue) && searchValue !== '') {
+            let regex = new RegExp(`(${searchValue})`, 'gi');
+            item.innerHTML = item.textContent.replace(regex, '<span class="highlight ">$1</span>');
+        }
+    });
+}
+      
+</script>
+</html>
