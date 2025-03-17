@@ -26,12 +26,8 @@ function performSearch() {
 
     // Ensure scrolling works
     if (firstMatch) {
-    firstMatch.style.border = '2px solid red';
-    firstMatch.style.backgroundColor = 'yellow';
-
-        setTimeout(() => {
+   
             firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
-        }, 100); // Adding a slight delay for smooth scrolling
     }
 
     // Handle clearing highlights when input is empty
