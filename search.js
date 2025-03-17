@@ -25,6 +25,7 @@ function performSearch() {
     });
 
     // Scroll to the first matching item
+    console.log(firstMatch);
     if (firstMatch) {
         firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
