@@ -29,44 +29,58 @@ let id2='';
             <td class='data-item'>${task.priority}</td>
             <td class='data-item'>${task.status}</td>
             <td><button type="button" class="btn btn-success btn-update"  data-bs-toggle="modal" data-updateid=${task.task_id} data-bs-target="#staticBackdrop">Update</button></td>
-            <td> <button class="btn btn-danger btn-delete " data-deleteid=${task.task_id} type="button">Delete</button></td>
+
+            <td> <button class="btn btn-danger btn-delete liveToastBtn" data-deleteid=${task.task_id} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Delete </button>
+            </td>
+
             </tr> `;
           });
 
         //Delete The task
         let del= document.querySelectorAll(".btn-delete");
+        
         del.forEach((item)=>{
           item.addEventListener('click',async()=>{
-           const  TASK_id= {id:item.dataset.deleteid}
-            let response = await fetch('https://backend-task-manager-1-zl34.onrender.com/api/task/delete',{
-              method:'DELETE',
-              headers:{
-                'Content-Type':'Application/json',
-              },
-              body:JSON.stringify(TASK_id)
-            })
-
-              let data= await response.json();
-              console.log(data);
-
-            if(data.error){
-              document.querySelector('#liveAlertPlaceholder').innerHTML=`
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  ${data.error}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>`
-                reloading();
+        if (item.classList.contains('liveToastBtn')) {
+          let a=confirm("Do you want to delete")
+          console.log(a);
+          if(a)
+          {
+               const  TASK_id= {id:item.dataset.deleteid}
+                let response = await fetch('https://backend-task-manager-1-zl34.onrender.com/api/task/delete',{
+                  method:'DELETE',
+                  headers:{
+                    'Content-Type':'Application/json',
+                  },
+                  body:JSON.stringify(TASK_id)
+                })
+    
+                  let data= await response.json();
+                  console.log(data);
+    
+                if(data.error){
+                  document.querySelector('#liveAlertPlaceholder').innerHTML=`
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      ${data.error}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`
+                    reloading();
+                  }
+               else{
+                  document.querySelector('#liveAlertPlaceholderr').innerHTML=`
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      ${data.message}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`
+                    reloading();
+                  }
+                }
+                
               }
-           else{
-              document.querySelector('#liveAlertPlaceholderr').innerHTML=`
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  ${data.message}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>`
-                reloading();
-              }
+            });
           })
-        })
+
+   
       
 //Showing data to Update the task 
        let upd= document.querySelectorAll(".btn-update")
@@ -195,4 +209,3 @@ let id2='';
       }, false)
     })
     })()
-    
