@@ -18,8 +18,15 @@
             console.log(regex)
             item.innerHTML = item.textContent.replace(regex, '<span class="highlight ">$1</span>');
           }
-         
-          
     });
+
+    document.getElementById('searchBox').addEventListener('input', function () {
+      if (this.value === '') {
+        dataItems.forEach(item => {
+                item.innerHTML = item.textContent;
+              });
+      }
+  });
+
   }
 

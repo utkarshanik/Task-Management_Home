@@ -82,4 +82,3 @@ Array.from(forms).forEach(form => {
   }, false)
 })
 })()
-

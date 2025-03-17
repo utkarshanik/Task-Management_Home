@@ -10,7 +10,7 @@
 <body id="dataSource">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand data-item" href="./index.html">Task Management</a>
+      <a class="navbar-brand data-item" href="index.html">Task Management</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,7 +22,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active data-item" aria-current="page" href="view.html">View </a>
-            
+          </li>
         </ul>
 
         <div class="d-flex me-5">
@@ -38,16 +38,15 @@
 <div class="container-fluid  page mt-3">
 
   <div id="liveAlertPlaceholder">
-
   </div>
 
-  <form class="needs-validation" id="taskForm" novalidate>
+  <form id="taskForm" >
   <h3 class="data-item">Add task</h1>
   
   <div class="row mb-3">
     <label for="inputtask" class="col-sm-2 col-form-label data-item">Task Owner</label>
     <div class="col-sm-10">
-      <input   type="text" class="form-control" id="inputtask" required>
+      <input  type="text" class="form-control" id="inputtask" required>
     </div>
   </div>
   
@@ -55,10 +54,10 @@
     <label for="inputtaskname" class="col-sm-2 col-form-label data-item">Task Name <span class="text-danger">*</span></label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="inputtaskname" required>
+      <div class="invalid-feedback">Please provide a task owner.</div>
     </div>
   </div>
   
-
   <div class="row mb-3">
     <label for="desc" class="col-sm-2 col-form-label data-item">Description</label>
     <div class="col-sm-10">
@@ -81,7 +80,7 @@
   </div>
   
   <div class="row mb-3">
-    <label for="duedate" class="col-sm-2 col-form-label data-item">Reminder</label>
+    <label for="duedate" class="col-sm-2 col-form-label data-item ">Reminder</label>
     <div class="col-sm-10">
       <input type="datetime-local" class="form-control" id="duedate" required>
     </div>
