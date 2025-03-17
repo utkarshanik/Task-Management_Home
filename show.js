@@ -18,7 +18,7 @@ let id2='';
   
         data.forEach((task, index) => {
           tableBody.innerHTML+=
-          ` <tr>
+          `<tr>
             <th class='data-item' scope="row">${index+1}</th>
             <td class='data-item'>${task.task_owner}</td>
             <td class='data-item'>${task.task_name}</td>
@@ -30,22 +30,44 @@ let id2='';
             <td class='data-item'>${task.status}</td>
             <td><button type="button" class="btn btn-success btn-update"  data-bs-toggle="modal" data-updateid=${task.task_id} data-bs-target="#staticBackdrop">Update</button></td>
 
-            <td> <button class="btn btn-danger btn-delete liveToastBtn" data-deleteid=${task.task_id} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Delete </button>
+            <td> 
+
+             <button class="btn btn-danger btn-delete liveToastBtn" data-deleteid=${task.task_id} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Delete </button>
+
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Task</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Do you want to Delete ?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger innerdel">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </td>
 
-            </tr> `;
+          </tr> `;
           });
 
         //Delete The task
         let del= document.querySelectorAll(".btn-delete");
+        let del2= document.querySelector(".innerdel");
         
         del.forEach((item)=>{
           item.addEventListener('click',async()=>{
-        if (item.classList.contains('liveToastBtn')) {
-          let a=confirm("Do you want to delete")
-          console.log(a);
-          if(a)
-          {
+        // if (item.classList.contains('liveToastBtn')) {
+        //   // let a=confirm("Do you want to delete")
+          // console.log(a);
+          
+         del2.addEventListener('click',async()=>{
+
                const  TASK_id= {id:item.dataset.deleteid}
                 let response = await fetch('https://backend-task-manager-1-zl34.onrender.com/api/task/delete',{
                   method:'DELETE',
@@ -74,9 +96,10 @@ let id2='';
                     </div>`
                     reloading();
                   }
-                }
+                // }
+          })
                 
-              }
+              // }
             });
           })
 
