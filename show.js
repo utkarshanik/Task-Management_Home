@@ -19,15 +19,15 @@ let id2='';
         data.forEach((task, index) => {
           tableBody.innerHTML+=
           ` <tr>
-            <th scope="row">${index+1}</th>
-            <td>${task.task_owner}</td>
-            <td>${task.task_name}</td>
-            <td>${task.task_detail}</td>
-            <td>${task.start_date}</td>
-            <td>${task.end_date}</td>
-            <td>${task.reminder}</td>
-            <td>${task.priority}</td>
-            <td>${task.status}</td>
+            <th class='data-item' scope="row">${index+1}</th>
+            <td class='data-item'>${task.task_owner}</td>
+            <td class='data-item'>${task.task_name}</td>
+            <td class='data-item'>${task.task_detail}</td>
+            <td class='data-item'>${task.start_date}</td>
+            <td class='data-item'>${task.end_date}</td>
+            <td class='data-item'>${task.reminder}</td>
+            <td class='data-item'>${task.priority}</td>
+            <td class='data-item'>${task.status}</td>
             <td><button type="button" class="btn btn-success btn-update"  data-bs-toggle="modal" data-updateid=${task.task_id} data-bs-target="#staticBackdrop">Update</button></td>
             <td> <button class="btn btn-danger btn-delete " data-deleteid=${task.task_id} type="button">Delete</button></td>
             </tr> `;
@@ -196,13 +196,3 @@ let id2='';
     })
     })()
     
-    
-    // Search box
-
-    
-    document.querySelector('.search').addEventListener('click',()=>{
-      let uservalue=document.querySelector('.searchbox')
-      let val= uservalue.value;
-      console.log( val);
-      alert(val)
-    })
