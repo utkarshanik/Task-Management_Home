@@ -18,6 +18,7 @@
             console.log(regex)
             item.innerHTML = item.textContent.replace(regex, '<span class="highlight ">$1</span>');
           }
+         
           
     });
   }
