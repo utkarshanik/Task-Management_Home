@@ -72,12 +72,16 @@ async function AddData() {
 }
 
 
-function isValidDate(dateString) {
-  const regex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
-  if (!regex.test(dateString)) return false;
+function isValidDate(dateString , isDateTime = false) {
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
+  const dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/; // YYYY-MM-DDTHH:MM
+
+  if (isDateTime ? !dateTimeRegex.test(dateString) : !dateRegex.test(dateString)) {
+      return false; // Format is incorrect
+  }
 
   const date = new Date(dateString);
-  return !isNaN(date.getTime()); // Ensure it's a real date
+  return !isNaN(date.getTime()); // Ensure it's a real date/time
 }
 
 // Example Usage:
@@ -155,7 +159,7 @@ function validateForm() {
   }
 
   // Validate Reminder Date
-  if (!new Date(reminder.value)) {
+  if (!isValidDate(reminder.value,true)) {
       showError(reminder, "Please enter a valid Reminder Date.");
       isValid = false;
   } else if (new Date(reminder.value) <= new Date()) {
