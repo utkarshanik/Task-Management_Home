@@ -71,7 +71,6 @@ async function AddData() {
   AddTask(taskData);
 }
 
-
 function isValidDate(dateString , isDateTime = false) {
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
   const dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/; // YYYY-MM-DDTHH:MM
@@ -83,10 +82,6 @@ function isValidDate(dateString , isDateTime = false) {
   const date = new Date(dateString);
   return !isNaN(date.getTime()); // Ensure it's a real date/time
 }
-
-// Example Usage:
-
-
 
 // Form Validation Function
 function validateForm() {
@@ -181,11 +176,15 @@ function validateForm() {
   if (status.value === "") {
       showError(status, "Please select a Status.");
       isValid = false;
-  } else {
+    } else {
       removeError(status);
-  }
-
-  return isValid;
+    }
+    let submitBtn=document.querySelector('.sub')
+    submitBtn.disabled = !isValid;
+    document.querySelectorAll("input, select").forEach((input) => {
+      input.addEventListener("input", validateForm);
+  });
+    return isValid;
 }
 
 // Bootstrap Form Validation (Needed for Bootstrap Styling)

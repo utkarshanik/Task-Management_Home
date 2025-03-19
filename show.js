@@ -31,9 +31,7 @@ let id2='';
             <td><button type="button" class="btn btn-success btn-update"  data-bs-toggle="modal" data-updateid=${task.task_id} data-bs-target="#staticBackdrop">Update</button></td>
 
             <td> 
-
              <button class="btn btn-danger btn-delete liveToastBtn" data-deleteid=${task.task_id} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Delete </button>
-
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -52,7 +50,6 @@ let id2='';
                 </div>
               </div>
             </td>
-
           </tr> `;
           });
 
@@ -102,8 +99,6 @@ let id2='';
               // }
             });
           })
-
-   
       
 //Showing data to Update the task 
        let upd= document.querySelectorAll(".btn-update")
@@ -137,6 +132,10 @@ let id2='';
                 
                 document.getElementById('taskForm').addEventListener('submit', async (event)=>{
                   event.preventDefault();
+                  if (!validateForm()) {
+                    return; // Stop submission if validation fails
+                  }
+                  
                   const taskOwner = document.getElementById('inputtask').value;
                   const taskName = document.getElementById('inputtaskname').value;
                   const description = document.getElementById('desc').value;
@@ -202,6 +201,7 @@ let id2='';
                   return formattedDate;
                 }
               }
+
           })
         })
     }
@@ -217,7 +217,122 @@ let id2='';
         location.reload()
       }, 1000);
     }
+//Function for validation
+function isValidDate(dateString , isDateTime = false) {
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
+  const dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/; // YYYY-MM-DDTHH:MM
 
+  if (isDateTime ? !dateTimeRegex.test(dateString) : !dateRegex.test(dateString)) {
+      return false; // Format is incorrect
+  }
+
+  const date = new Date(dateString);
+  return !isNaN(date.getTime()); // Ensure it's a real date/time
+}
+
+// Form Validation Function
+function validateForm() {
+  let isValid = true;
+
+  function showError(input, message) {
+      input.classList.add("is-invalid");
+      let feedback = input.nextElementSibling;
+      if (!feedback || !feedback.classList.contains("invalid-feedback")) {
+          feedback = document.createElement("div");
+          feedback.className = "invalid-feedback";
+          input.parentNode.appendChild(feedback);
+      }
+      feedback.textContent = message;
+  }
+
+  function removeError(input) {
+      input.classList.remove("is-invalid");
+      let feedback = input.nextElementSibling;
+      if (feedback && feedback.classList.contains("invalid-feedback")) {
+          feedback.textContent = "";
+      }
+  }
+
+  const taskOwner = document.getElementById("inputtask");
+  if (taskOwner.value.trim()==='') {
+      showError(taskOwner, "Task Owneris required.");
+      isValid = false;
+  } else {
+      removeError(taskOwner);
+  }
+
+  const taskName = document.getElementById("inputtaskname");
+  if (taskName.value.trim()==='') {
+      showError(taskName, "Task Name is required.");
+      isValid = false;
+  } else {
+      removeError(taskName);
+  }
+
+  const desc = document.getElementById("desc");
+  if (desc.value.trim() === "") {
+      showError(desc, "Description is required.");
+      isValid = false;
+  } else {
+      removeError(desc);
+  }
+
+  const startDate = document.getElementById("startdate");
+  const endDate = document.getElementById("enddate");
+  const reminder = document.getElementById("duedate");
+
+  // Validate Start Date
+  if (!isValidDate(startDate.value)) {
+      showError(startDate, "Please enter a valid Start Date.");
+      isValid = false;
+    } else {
+      removeError(startDate);
+    }
+    
+  // Validate End Date
+  if (!isValidDate(endDate.value)) {
+      showError(endDate, "Please enter a valid End Date.");
+      isValid = false;
+  } else if (new Date(endDate.value) <= new Date(startDate.value)) {
+      showError(endDate, "End Date must be after Start Date.");
+      isValid = false;
+  } else {
+      removeError(endDate);
+  }
+
+  // Validate Reminder Date
+  if (!isValidDate(reminder.value,true)) {
+      showError(reminder, "Please enter a valid Reminder Date.");
+      isValid = false;
+  } else if (new Date(reminder.value) <= new Date()) {
+      showError(reminder, "Reminder must be set for a future date.");
+      isValid = false;
+  } else {
+      removeError(reminder);
+  }
+
+  const priority = document.getElementById("inputpriority");
+  if (priority.value === "") {
+      showError(priority, "Please select a Priority.");
+      isValid = false;
+  } else {
+      removeError(priority);
+  }
+
+  const status = document.getElementById("inputstatus");
+  if (status.value === "") {
+      showError(status, "Please select a Status.");
+      isValid = false;
+    } else {
+      removeError(status);
+    }
+    let submitBtn=document.querySelector('.sub')
+    submitBtn.disabled = !isValid;
+    document.querySelectorAll("input, select").forEach((input) => {
+      input.addEventListener("input", validateForm);
+  });
+    return isValid;
+}
     (() => {
       'use strict'
     const forms = document.querySelectorAll('.needs-validation')
